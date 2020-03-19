@@ -2,25 +2,29 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.axes as ax
 from matplotlib.animation import FuncAnimation
-from random import uniform
+from random import uniform, choice
 
-speed = 0.005
-fig = plt.figure(figsize=(9,4))
+speeds = [0.05, -0.05, 0.04, -0.04, 0.03, -0.03]
+
+fig = plt.figure(figsize=(15,8))
 ax = fig.add_subplot()
-ax.set_xlim(right=4)
-ax.set_ylim(top=2)
 
-x_max = 4
-y_max = 2
+x_max = 10
+y_max = 6
 xy_min = 0
+
+ax.set_xlim(right=x_max)
+ax.set_ylim(top=y_max)
 
 class Person:
     def __init__(self, num):
         self.key = num
-        self.x = uniform(0, 4)
-        self.y = uniform(0, 2)
-        self.speed = 0.005
+        self.x = uniform(0, x_max)
+        self.y = uniform(0, y_max)
+        self.x_speed = choice(speeds)
+        self.y_speed = choice(speeds)
         self.color = 'ro'
+        self.multiplier = 1
 
 
     def init_draw(self):
@@ -33,28 +37,12 @@ class Person:
 
 
     def move(self):
-        self.y += self.speed
-        self.x += self.speed
+        self.y += self.x_speed
+        self.x += self.y_speed
 
-        # Right boundary
-        if self.x >= x_max:
-            self.speed = -self.speed
-            self.x += self.speed
-        
-        # Top boundary
-        if self.y >= y_max:
-            self.speed = -self.speed
-            self.y += self.speed
-
-        # Bottom boundary
-        if self.y <= xy_min:
-            self.speed = -self.speed
-            self.y += self.speed
-
-        # Left boundary
-        if self.x <= xy_min:
-            self.speed = -self.speed
-            self.x += self.speed
+        if self.x >= x_max or self.x <= xy_min or self.y >= y_max or self.y <= xy_min:
+            self.x_speed = -self.x_speed
+            self.y_speed = -self.y_speed
 
 
     def get_position(self):
@@ -63,7 +51,12 @@ class Person:
 
     def colission(self):
         self.scatter.set_color('b')
-        self.speed = -self.speed
+        if self.x_speed < 0:
+            self.x_speed = abs(choice(speeds))
+            self.y_speed = abs(choice(speeds))
+        else:
+            self.x_speed = -1 * abs(choice(speeds))
+            self.y_speed = -1 * abs(choice(speeds))
 
 
 def init():
@@ -89,11 +82,11 @@ def next_frame(t):
             x_current = positions[i][1][0]
             x_diff_before = x_current - x_before
 
-            if x_diff_before <= 0.01:
+            if x_diff_before <= 0.005:
                 y_before = positions[i-1][1][1]
                 y_current = positions[i][1][1]
                 y_diff_before = y_current - y_before
-                if y_diff_before <= 0.01:
+                if y_diff_before <= 0.005:
                     people[positions[i-1][0]].colission()
                     people[positions[i][0]].colission()
                     
@@ -106,10 +99,10 @@ def next_frame(t):
 
 
 people = []
-for i in range(0, 25):
+for i in range(0, 100):
     person = Person(i)
     person.init_draw()
     people.append(person)
 
-ani = FuncAnimation(fig, func=next_frame, blit=False, interval=25)
+ani = FuncAnimation(fig, func=next_frame, blit=False, interval=50)
 plt.show()

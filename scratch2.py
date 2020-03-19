@@ -1,5 +1,5 @@
-my_list = [[1, 2], [-1, 9]]
+import random
 
-my_list.sort()
-print(my_list)
+speeds = [0.005, -0.005, 0.004, -0.004, 0.003, -0.003]
+print(random.choice(speeds))
 
