@@ -37,4 +37,4 @@ The third simulation results in an even lower peak. Furthermore, the number of i
 
 This simulation is not intended to overrule any medical/professional advice. Rather, the purpose is to visualize the importance of Social Distancing and Self-isolation.  For the most up to date statistics and advice, visit the CDC website!
 
-![](ReadMe_Images/Simulation_recording.mov)
+![](ReadMe_Images/simulation.gif)
