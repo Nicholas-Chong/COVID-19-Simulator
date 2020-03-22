@@ -10,14 +10,14 @@ Those who have been infected, then recovered cannot contract the infection again
 ## Simulation 1: No Self-Isolation
 ![](/FFA_2.png)
 
-*Peak # of People Infected: 51*
+**Peak # of People Infected: 51**
 
 This model simulates a population in which no one is practicing self-isolation. The rise in infections is sharp and sudden. This scenario, similar to what has occurred in Italy, is the type of scenario that would overrun healthcare systems. Because the number of total infections is so high, there is not enough room in hospitals to accommodate everyone that needs care. The overburdened healthcare system ultimately results in high death rates. 
 
 ## Simulation 2: 25% in Self-Isolation
 ![](/isolation_4.png)
 
-Peak # of People Infected: 39
+**Peak # of People Infected: 39**
 
 This scenario simulates a population in which 25% of people are practicing self-isolation. The peak number of people infected during this pandemic simulation is considerably lower than that of Simulation 1. 
 
@@ -25,7 +25,7 @@ This scenario simulates a population in which 25% of people are practicing self-
 ## Simulation 3: 50% Population in Self-Isolation
 ![](/isolation_2.png)
 
-Peak # of People Infected: 35
+**Peak # of People Infected: 35**
 
 The third simulation results in an even lower peak. Furthermore, the number of infected people is 0 at the approximate time of 800. Increased self-isolation has resulted in a lower peak and an earlier end to the pandemic!
 
