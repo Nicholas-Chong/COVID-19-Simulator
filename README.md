@@ -5,9 +5,12 @@ This program visualizes the effects of Social Distancing and self-isolation and 
 
 Those who have been infected, then recovered cannot contract the infection again, nor can they infect other people after they have recovered. 
 
-Ledgend: 
+**Ledgend**
+
 Red - Susceptible
+
 Blue - Infected
+
 Green - Recovered
 
 ## Simulation 1: No Self-Isolation
