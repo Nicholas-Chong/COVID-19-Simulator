@@ -10,7 +10,7 @@ Those who have been infected, then recovered cannot contract the infection again
 ## Simulation 1: No Self-Isolation
 ![](/FFA_2.png)
 
-::Peak # of People Infected: 51::
+*Peak # of People Infected: 51*
 
 This model simulates a population in which no one is practicing self-isolation. The rise in infections is sharp and sudden. This scenario, similar to what has occurred in Italy, is the type of scenario that would overrun healthcare systems. Because the number of total infections is so high, there is not enough room in hospitals to accommodate everyone that needs care. The overburdened healthcare system ultimately results in high death rates. 
 
