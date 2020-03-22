@@ -6,7 +6,8 @@ from random import uniform, choice
 
 speeds = [0.05, -0.05, 0.04, -0.04, 0.03, -0.03, 0.02, -0.02, 0.01, -0.01]
 
-# Create figure/plot/axes
+# ---------------------------Create figure/plot/axes---------------------------
+
 fig = plt.figure(figsize=(10,8))
 ax = plt.subplot(211) # (rows, columns, plot index)
 ax.set_xticklabels([])
@@ -23,9 +24,12 @@ ax.set_ylim(top=y_max)
 
 # Create bottom graph
 ax2 = plt.subplot(212)
+ax2.set_xlim(right=750)
+ax2.set_ylim(top=100)
 
+# -----------------------Class and Function definitions------------------------
 class Person:
-    def __init__(self, num):
+    def __init__(self, num, is_distancing):
         self.key = num
         self.x = uniform(0, x_max)
         self.y = uniform(0, y_max)
@@ -38,6 +42,8 @@ class Person:
         self.has_been_infected = False
         self.time_infected = -1
 
+        self.is_distancing = is_distancing
+
 
     def init_draw(self):
         self.scatter, = ax.plot(self.x, self.y, self.color)
@@ -49,12 +55,13 @@ class Person:
 
 
     def move(self):
-        self.y += self.x_speed
-        self.x += self.y_speed
+        if self.is_distancing == False:
+            self.y += self.x_speed
+            self.x += self.y_speed
 
-        if self.x >= x_max or self.x <= xy_min or self.y >= y_max or self.y <= xy_min:
-            self.x_speed = -self.x_speed
-            self.y_speed = -self.y_speed
+            if self.x >= x_max or self.x <= xy_min or self.y >= y_max or self.y <= xy_min:
+                self.x_speed = -self.x_speed
+                self.y_speed = -self.y_speed
 
         if self.infected == True:
             self.time_infected += 1
@@ -91,8 +98,6 @@ def next_frame(t):
     infected = 0
 
     # First graph (moving dots)
-
-    next = []
     for i in people:
         if i.infected == True:
             infected += 1
@@ -142,16 +147,26 @@ def next_frame(t):
         else:
             people[positions[i][0]].intermittent_draw()
 
+    # Second graph
     ax2.plot(t, infected, 'r.')
+
+    if t == 750:
+        ani.event_source.stop()
+
+# ---------------------------------MAIN CODE---------------------------------
 
 culmulative_infected = []
 people = [] # people is a global variable
-for i in range(0, 75):
-    person = Person(i) # Set the key value equal to it's position in the list
+for i in range(0, 100):
+    # if i%2 == 0:
+    #     bool = False
+    # else:
+    #     bool = True
+
+    person = Person(i, True) # Set the key value equal to it's position in the list
     person.init_draw()
     people.append(person)
 
 # Create animation
-ani = FuncAnimation(fig, func=next_frame, init_func=init, 
-    interval=10)
+ani = FuncAnimation(fig, func=next_frame, init_func=init, interval=10)
 plt.show()
