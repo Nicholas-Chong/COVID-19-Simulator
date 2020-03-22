@@ -8,14 +8,14 @@ This program visualizes the effects of Social Distancing and self-isolation and 
 Those who have been infected, then recovered cannot contract the infection again, nor can they infect other people after they have recovered. 
 
 ## Simulation 1: No Self-Isolation
-![](/FFA_2.png)
+![](ReadMe_Images/FFA_2.png)
 
 **Peak # of People Infected: 51**
 
 This model simulates a population in which no one is practicing self-isolation. The rise in infections is sharp and sudden. This scenario, similar to what has occurred in Italy, is the type of scenario that would overrun healthcare systems. Because the number of total infections is so high, there is not enough room in hospitals to accommodate everyone that needs care. The overburdened healthcare system ultimately results in high death rates. 
 
 ## Simulation 2: 25% in Self-Isolation
-![](/isolation_4.png)
+![](ReadMe_Images/isolation_4.png)
 
 **Peak # of People Infected: 39**
 
@@ -23,7 +23,7 @@ This scenario simulates a population in which 25% of people are practicing self-
 
 
 ## Simulation 3: 50% Population in Self-Isolation
-![](/isolation_2.png)
+![](ReadMe_Images/isolation_2.png)
 
 **Peak # of People Infected: 35**
 
