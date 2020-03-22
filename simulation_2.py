@@ -4,7 +4,9 @@ import matplotlib.axes as ax
 from matplotlib.animation import FuncAnimation
 from random import uniform, choice
 
-speeds = [0.05, -0.05, 0.04, -0.04, 0.03, -0.03, 0.02, -0.02, 0.01, -0.01]
+speeds = [0.08, -0.08, 0.07, -0.07, 0.06, -0.06, 0.05, -0.05, 0.04, -0.04]
+
+# ---------------------------CREATE FIGURES/PLOTS------------------------------
 
 # Create figure/plot/axes
 fig = plt.figure(figsize=(10,8))
@@ -13,6 +15,7 @@ ax.set_xticklabels([])
 ax.set_yticklabels([])
 ax.set_xticks([])
 ax.set_yticks([])
+plt.title('25% Population in Self Isolation')
 
 x_max = 10
 y_max = 6
@@ -23,11 +26,15 @@ ax.set_ylim(top=y_max)
 
 # Create bottom graph
 ax2 = plt.subplot(212)
-ax2.set_xlim(right=750)
-ax2.set_ylim(top=100)
+ax2.set_xlim(right=1000)
+ax2.set_ylim(top=50)
+plt.ylabel('# of People Infected')
+plt.xlabel('Time')
+
+# ----------------------CLASS AND FUNCTION DEFINITION--------------------------
 
 class Person:
-    def __init__(self, num):
+    def __init__(self, num, is_isolating):
         self.key = num
         self.x = uniform(0, x_max)
         self.y = uniform(0, y_max)
@@ -39,6 +46,8 @@ class Person:
         self.infected = False
         self.has_been_infected = False
         self.time_infected = -1
+        
+        self.is_isolating = is_isolating
 
 
     def init_draw(self):
@@ -51,12 +60,13 @@ class Person:
 
 
     def move(self):
-        self.y += self.x_speed
-        self.x += self.y_speed
+        if self.is_isolating == False:
+            self.y += self.x_speed
+            self.x += self.y_speed
 
-        if self.x >= x_max or self.x <= xy_min or self.y >= y_max or self.y <= xy_min:
-            self.x_speed = -self.x_speed
-            self.y_speed = -self.y_speed
+            if self.x >= x_max or self.x <= xy_min or self.y >= y_max or self.y <= xy_min:
+                self.x_speed = -self.x_speed
+                self.y_speed = -self.y_speed
 
         if self.infected == True:
             self.time_infected += 1
@@ -71,17 +81,20 @@ class Person:
 
 
     def colission(self):
-        if self.has_been_infected == False:
-            self.infected = True
-            self.has_been_infected = True
-
-        self.scatter.set_color('b')
         if self.x_speed < 0:
             self.x_speed = abs(choice(speeds))
             self.y_speed = abs(choice(speeds))
         else:
             self.x_speed = -1 * abs(choice(speeds))
             self.y_speed = -1 * abs(choice(speeds))
+
+    
+    def infect(self):
+        if self.has_been_infected == False:
+            self.infected = True
+            self.has_been_infected = True
+
+        self.scatter.set_color('b')
 
 
 def init():
@@ -131,6 +144,12 @@ def next_frame(t):
                     # Call collision methods
                     people[positions[i-1][0]].colission()
                     people[positions[i][0]].colission()
+
+                    if people[positions[i-1][0]].infected == True:
+                        people[positions[i][0]].infect()
+
+                    if people[positions[i][0]].infected == True:
+                        people[positions[i-1][0]].infect()
                     
                     # Call draw methods to update position
                     people[positions[i-1][0]].intermittent_draw()
@@ -145,15 +164,27 @@ def next_frame(t):
             people[positions[i][0]].intermittent_draw()
 
     ax2.plot(t, infected, 'r.')
+    
+    if t == 1000:
+        ani.event_source.stop()
 
-culmulative_infected = []
+# --------------------------------MAIN CODE------------------------------------
+
 people = [] # people is a global variable
-for i in range(0, 75):
-    person = Person(i) # Set the key value equal to it's position in the list
+for i in range(0, 100):
+    if i%4 == 0:
+        bool = True
+    else:
+        bool = False
+
+    person = Person(i, bool) # Set the key value equal to it's position in the list
     person.init_draw()
     people.append(person)
 
+choice(people).infect()
+choice(people).infect()
+
 # Create animation
-ani = FuncAnimation(fig, func=next_frame, init_func=init, 
+ani = FuncAnimation(fig, func=next_frame, init_func=init,  
     interval=10)
 plt.show()
