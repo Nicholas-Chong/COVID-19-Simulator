@@ -15,7 +15,7 @@ ax.set_xticklabels([])
 ax.set_yticklabels([])
 ax.set_xticks([])
 ax.set_yticks([])
-plt.title('25% Population in Self Isolation')
+plt.title('Free For All')
 
 x_max = 10
 y_max = 6
@@ -177,7 +177,7 @@ for i in range(0, 100):
     else:
         bool = False
 
-    person = Person(i, bool) # Set the key value equal to it's position in the list
+    person = Person(i, False) # Set the key value equal to it's position in the list
     person.init_draw()
     people.append(person)
 

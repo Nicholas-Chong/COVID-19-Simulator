@@ -36,3 +36,5 @@ This scenario simulates a population in which 25% of people are practicing self-
 The third simulation results in an even lower peak. Furthermore, the number of infected people is 0 at the approximate time of 800. Increased self-isolation has resulted in a lower peak and an earlier end to the pandemic!
 
 This simulation is not intended to overrule any medical/professional advice. Rather, the purpose is to visualize the importance of Social Distancing and Self-isolation.  For the most up to date statistics and advice, visit the CDC website!
+
+![](ReadMe_Images/Simulation_recording.mov)
