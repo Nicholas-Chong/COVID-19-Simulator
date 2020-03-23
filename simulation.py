@@ -1,10 +1,18 @@
+#-----------------------------------------------------------------------------
+# Name:       simulation.py
+# Purpose:    To visualize the spread of a virus with/without social distancing
+#
+# Author:      Nicholas Chong
+# Created:     15-Mar-2020
+#-----------------------------------------------------------------------------
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.axes as ax
 from matplotlib.animation import FuncAnimation
 from random import uniform, choice
 
-speeds = [0.08, -0.08, 0.07, -0.07, 0.06, -0.06, 0.05, -0.05, 0.04, -0.04]
+speeds = [0.08, -0.08, 0.07, -0.07, 0.06, -0.06, 0.05, -0.05, 0.04, -0.04, 0, 0]
 
 # ---------------------------CREATE FIGURES/PLOTS------------------------------
 
@@ -27,7 +35,7 @@ ax.set_ylim(top=y_max)
 # Create bottom graph
 ax2 = plt.subplot(212)
 ax2.set_xlim(right=1000)
-ax2.set_ylim(top=50)
+ax2.set_ylim(top=70)
 plt.ylabel('# of People Infected')
 plt.xlabel('Time')
 
@@ -97,17 +105,12 @@ class Person:
         self.scatter.set_color('b')
 
 
-def init():
-    return []
-
-
 def next_frame(t):
 
     infected = 0
 
     # First graph (moving dots)
 
-    next = []
     for i in people:
         if i.infected == True:
             infected += 1
@@ -155,8 +158,6 @@ def next_frame(t):
                     people[positions[i-1][0]].intermittent_draw()
                     people[positions[i][0]].intermittent_draw()
 
-
-
             else:
                 people[positions[i][0]].intermittent_draw()
 
@@ -168,16 +169,51 @@ def next_frame(t):
     if t == 1000:
         ani.event_source.stop()
 
+
 # --------------------------------MAIN CODE------------------------------------
+def setup():
+    title = input('Name this simulation: ')
+    social_distancing = input('Social Distancing? Y/N: ')
+
+    if social_distancing == 'Y':
+        social_distancing = True
+
+    else:
+        social_distancing = False
+    
+    if social_distancing == True:
+        social_distancing_level = input('Social Distancing Level HIGH/MED: ')
+        if social_distancing_level == 'HIGH':
+            social_distancing_level = 2
+        else:
+            social_distancing_level = 4
+    else:
+        social_distancing_level = None
+
+    dict = {}
+    dict['title'] = title
+    dict['sd'] = social_distancing
+    dict['sdl'] = social_distancing_level
+    
+    return dict
+
+settings = setup()
+
+plt.subplot(211)
+plt.title(settings['title'])
 
 people = [] # people is a global variable
 for i in range(0, 100):
-    if i%4 == 0:
-        bool = True
+    if settings['sd'] == True:
+        if i%settings['sdl'] == 0:
+            bool = True
+        else:
+            bool = False
+
     else:
         bool = False
 
-    person = Person(i, False) # Set the key value equal to it's position in the list
+    person = Person(i, bool) # Set the key value equal to it's position in the list
     person.init_draw()
     people.append(person)
 
@@ -185,6 +221,5 @@ choice(people).infect()
 choice(people).infect()
 
 # Create animation
-ani = FuncAnimation(fig, func=next_frame, init_func=init,  
-    interval=10)
+ani = FuncAnimation(fig, func=next_frame, interval=10)
 plt.show()
