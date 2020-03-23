@@ -170,7 +170,6 @@ def next_frame(t):
         ani.event_source.stop()
 
 
-# --------------------------------MAIN CODE------------------------------------
 def setup():
     title = input('Name this simulation: ')
     social_distancing = input('Social Distancing? Y/N: ')
@@ -196,6 +195,9 @@ def setup():
     dict['sdl'] = social_distancing_level
     
     return dict
+
+
+# --------------------------------MAIN CODE------------------------------------
 
 settings = setup()
 
