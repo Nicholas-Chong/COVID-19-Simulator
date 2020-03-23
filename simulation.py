@@ -1,10 +1,11 @@
-#-----------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 # Name:       simulation.py
-# Purpose:    To visualize the spread of a virus with/without social distancing
+# Purpose:    To visualize the spread of a virus during a pandemic 
+#             with/without social distancing
 #
 # Author:      Nicholas Chong
 # Created:     15-Mar-2020
-#-----------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -12,11 +13,18 @@ import matplotlib.axes as ax
 from matplotlib.animation import FuncAnimation
 from random import uniform, choice
 
-speeds = [0.08, -0.08, 0.07, -0.07, 0.06, -0.06, 0.05, -0.05, 0.04, -0.04, 0, 0]
+speeds = [
+    0.08, -0.08, 
+    0.07, -0.07, 
+    0.06, -0.06, 
+    0.05, -0.05, 
+    0.04, -0.04, 
+    0, 0
+    ]
 
 # ---------------------------CREATE FIGURES/PLOTS------------------------------
 
-# Create figure/plot/axes
+# Create upper graph
 fig = plt.figure(figsize=(10,8))
 ax = plt.subplot(211) # (rows, columns, plot index)
 ax.set_xticklabels([])
@@ -120,7 +128,9 @@ def next_frame(t):
     # COLLISION DETECTION
     positions = [] # [[person key, [x, y]], [person key, [x, y]]...]
     for i in people:
-        data = [i.key, i.get_position()] # i.key will return the same value as the person-object's location in the people list
+        # i.key will return the same value as the person-object's location in 
+        # the people list
+        data = [i.key, i.get_position()] 
         positions.append(data)
 
     positions.sort(key=lambda x: x[1]) # Sort list by x values
@@ -201,13 +211,17 @@ def setup():
 
 settings = setup()
 
+title = settings['title']
+social_distancing = settings['sd']
+social_distancing_lvl = settings['sdl']
+
 plt.subplot(211)
-plt.title(settings['title'])
+plt.title(title)
 
 people = [] # people is a global variable
 for i in range(0, 100):
-    if settings['sd'] == True:
-        if i%settings['sdl'] == 0:
+    if social_distancing == True:
+        if i % social_distancing_lvl == 0:
             bool = True
         else:
             bool = False
@@ -215,10 +229,11 @@ for i in range(0, 100):
     else:
         bool = False
 
-    person = Person(i, bool) # Set the key value equal to it's position in the list
+    person = Person(i, bool)
     person.init_draw()
     people.append(person)
 
+# Randomly choose 2 people to start off with the infection
 choice(people).infect()
 choice(people).infect()
 
