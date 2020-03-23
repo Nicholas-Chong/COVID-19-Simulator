@@ -192,10 +192,13 @@ def setup():
     
     if social_distancing == True:
         social_distancing_level = input('Social Distancing Level HIGH/MED: ')
+
         if social_distancing_level == 'HIGH':
             social_distancing_level = 2
+
         else:
             social_distancing_level = 4
+            
     else:
         social_distancing_level = None
 
