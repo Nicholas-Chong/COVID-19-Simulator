@@ -6,12 +6,12 @@
 # Author:      Nicholas Chong
 # Created:     15-Mar-2020
 #------------------------------------------------------------------------------
-
-import numpy as np
+ 
 import matplotlib.pyplot as plt
 import matplotlib.axes as ax
 from matplotlib.animation import FuncAnimation
 from random import uniform, choice
+import os
 
 speeds = [
     0.08, -0.08, 
@@ -31,7 +31,6 @@ ax.set_xticklabels([])
 ax.set_yticklabels([])
 ax.set_xticks([])
 ax.set_yticks([])
-plt.title('Free For All')
 
 x_max = 10
 y_max = 6
@@ -44,8 +43,8 @@ ax.set_ylim(top=y_max)
 ax2 = plt.subplot(212)
 ax2.set_xlim(right=1000)
 ax2.set_ylim(top=70)
-plt.ylabel('# of People Infected')
-plt.xlabel('Time')
+ax2.set_xlabel('Time')
+ax2.set_ylabel('Total # of People Infected')
 
 # ----------------------CLASS AND FUNCTION DEFINITION--------------------------
 
@@ -212,14 +211,15 @@ def setup():
 
 # --------------------------------MAIN CODE------------------------------------
 
+os.system('clear')
+
 settings = setup()
 
 title = settings['title']
 social_distancing = settings['sd']
 social_distancing_lvl = settings['sdl']
 
-plt.subplot(211)
-plt.title(title)
+ax.set_title(title)
 
 people = [] # people is a global variable
 for i in range(0, 100):
