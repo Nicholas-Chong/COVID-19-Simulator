@@ -37,6 +37,6 @@ The third simulation results in an even lower peak. Furthermore, the number of i
 
 This simulation is not intended to overrule any medical/professional advice. Rather, the purpose is to visualize the importance of Social Distancing and Self-isolation.  For the most up to date statistics and advice, visit the CDC website!
 
-To run the simulation yourself, download the simulation.exe file and open on your own computer. A console will open, where you can enter in your own parameters. Once the simulation is complete, you can save the resuling image through the given GUI.
+To run the simulation yourself, download the "simulation" file and open on your own computer. A console will open, where you can enter your own parameters. Once the simulation is complete, you can save the resuling image through the given GUI.
 
 ![](ReadMe_Images/simulation.gif)
